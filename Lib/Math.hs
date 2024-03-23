@@ -40,8 +40,8 @@ clamp min' max' x = min (max min' x) max'
 
 -- |Calculate random Word32 numbers into Float [0,1]
 inRange :: RandomGen g => g -> Int -> Float
-inRange gen i = fromIntegral (i - min') P./ fromIntegral (max' - min') where
-    (min', max') = genRange gen
+inRange _ i = fromIntegral (i - min') P./ fromIntegral (max' - min') where
+    (min', max') = (0, 2147483562)
 
 mkTangent :: UnitV3 -> UnitV3
 mkTangent (UnitV3 (V3 x y z)) = normalize3( result c ) where
