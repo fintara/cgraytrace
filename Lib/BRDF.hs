@@ -6,7 +6,7 @@ import Geometry
 import Light
 import Math
 import Linear
-import System.Random (RandomGen(..))
+import System.Random (RandomGen, uniform)
 
 -- |all BRDFs have this two functions
 class BRDF brdf geom where
@@ -27,8 +27,8 @@ instance BRDF BRDFs a where
     generateRay gen (Diffuse _) (Hit _ ipoint inormal itangent ibitangent _) =
         (Ray (ipoint, normalize3 dir), gen'') where
 
-            (ran_theta, gen') = next gen
-            (ran_phi, gen'')  = next gen'
+            (ran_theta, gen') = uniform gen
+            (ran_phi, gen'')  = uniform gen'
             inRange' g x = inRange g x *~ one                       :: PlaneAngle Float
 
             theta = inRange' gen ran_theta * (pi/_2)                :: PlaneAngle Float

@@ -5,7 +5,7 @@ import Numeric.Units.Dimensional.Prelude hiding ((-))
 import Math
 import Linear
 import Linear.Affine
-import System.Random (RandomGen(..))
+import System.Random (RandomGen, uniform)
 
 -- |Light description
 type Color a        = V3 a
@@ -38,8 +38,8 @@ instance Shadow Light where
             pt              = ptC .+^ (vpt0 P.+ vpt1)
             dist            = norm vec2light
             (vpt0, vpt1)    = (side0 ^* sampleX, side1 ^* sampleY) :: (V3 Float, V3 Float)
-            (ran_x, gen')   = next gen
-            (ran_y, gen'')  = next gen'
+            (ran_x, gen')   = uniform gen
+            (ran_y, gen'')  = uniform gen'
             (sampleX, sampleY) = (inRange gen ran_x P.- 0.5, inRange gen' ran_y P.- 0.5) :: (Float, Float)
 
     eval (OmniLight (_, e)) _               = V3 (e*pi4) (e*pi4) (e*pi4) where pi4 = _1 / (_4*pi)
